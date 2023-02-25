@@ -1,0 +1,22 @@
+###
+POST http://localhost:8000/user/
+Content-Type: application/json
+
+{
+    "first_name": "tri",
+    "last_name": "nguyen",
+    "phone": "0938671192",
+    "email": "nguyentri.alan@gmail.com",
+    "b_date": "2001-04-04",
+    "gender": "male",
+    "password": "123456"
+}
+
+###
+POST http://localhost:8000/account/auth
+Content-Type: application/json
+
+{
+    "email": "nguyentri.alan@gmail.com",
+    "password": "123456"
+}
