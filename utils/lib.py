@@ -16,6 +16,12 @@ def from_dict(Model: ModelBase, dictionary: dict) -> object:
             obj.__dict__[param] = dictionary[param]
     return obj
 
+def get_data(obj: object, dictionary: dict) -> object:
+    for param in dictionary.keys():
+        if param in obj.__dict__.keys():
+            obj.__dict__[param] = dictionary[param]
+    return obj
+
 def model_to_dict(object: ModelBase) -> dict:
     data = dict()
     for item in object.__dict__.keys():
@@ -25,3 +31,10 @@ def model_to_dict(object: ModelBase) -> dict:
             else:
                 data[item] = object.__dict__[item]
     return data
+
+def map(from_obj: object, to_obj: object) -> object:
+    for item in to_obj.__dict__.keys():
+        if item in from_obj.__dict__.keys():
+            to_obj.__dict__[item] = from_obj.__dict__[item]
+
+    return to_obj

@@ -12,5 +12,8 @@ class JwtFilter:
         }
         return jwt.encode(payload=payload, key=self.config['TOKEN_KEY'], algorithm=self.config['ALGORITHM'])
     
-    def get_account_id(self, token: str) -> str:
-        return jwt.decode(token, key=self.config['TOKEN_KEY'])
+    def get_account_id(self, access_token: str) -> str:
+        if access_token.startswith('Bearer ') == False:
+            return None
+        token: str = access_token.split(' ')[1]
+        return jwt.decode(token, key=self.config['TOKEN_KEY'], algorithms=self.config['ALGORITHM'])['id']

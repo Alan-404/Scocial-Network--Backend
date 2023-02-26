@@ -20,3 +20,22 @@ Content-Type: application/json
     "email": "nguyentri.alan@gmail.com",
     "password": "123456"
 }
+
+###
+GET http://localhost:8000/user/info
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6Ik9UWVdFVU83V05HMTdFMVFLT0hJOSJ9.jYrR7nDCuv9Ic1ZO8qSsRhBruJ_ZtGBNehDF9uNPH9Y
+
+
+###
+PUT http://localhost:8000/user/
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6Ik9UWVdFVU83V05HMTdFMVFLT0hJOSJ9.jYrR7nDCuv9Ic1ZO8qSsRhBruJ_ZtGBNehDF9uNPH9Y
+
+{
+    "first_name": "tri",
+    "last_name": "nguyen",
+    "phone": "0938671192",
+    "b_date": "2001-04-04",
+    "gender": "male"
+}

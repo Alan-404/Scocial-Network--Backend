@@ -23,6 +23,22 @@ class UserService:
         except Exception as e:
             print(e)
             return None
+    
+    def edit(self, user: User, edit_data: User) -> User:
+        try:
+            edit_data.modified_at = timezone.now()
+
+            user_serializer: UserSerializer = self.serializer(user, data=edit_data.__dict__)
+            if user_serializer.is_valid():
+                user_serializer.save()
+
+                return edit_data
+            else:
+                print(user_serializer.errors)
+            return None
+        except Exception as e:
+            print(e)
+            return None
 
     def get_by_email(self, email: str) -> User:
         try:

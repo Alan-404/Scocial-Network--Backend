@@ -27,6 +27,11 @@ class AccountService:
             print(str(e))
             return None
     
+    """ def edit(self, account: Account, edited_account: Account) -> Account:
+        try:
+
+        except Exception as e:
+            return None """
     def get_by_user(self, user_id: str) -> Account:
         try:
             account: Account = self.model.objects.get(user_id=user_id)
