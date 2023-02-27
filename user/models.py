@@ -15,4 +15,4 @@ class User(models.Model):
     modified_at = models.DateTimeField()
 
     class Meta:
-        db_table = "\"USER\""
+        db_table = "user_system"

@@ -14,24 +14,34 @@ class AccountService:
         try:
             account.id = make_id(length_id)
             account.password = make_password(account.password)
+            account.role = account.role.upper()
 
             account.modified_at = timezone.now()
-            
             account_serializer = self.serializer(data=account.__dict__)
 
             if account_serializer.is_valid():
                 account_serializer.save()
                 return account
+            else:
+                print(account_serializer.errors)
             return None
         except Exception as e:
             print(str(e))
             return None
     
-    """ def edit(self, account: Account, edited_account: Account) -> Account:
+    def edit(self, account: Account, edited_account: Account) -> Account:
         try:
-
+            edited_account.modified_at = timezone.now()
+            edited_account.password = make_password(edited_account.password)
+            account_serializer = AccountSerializer(account, data=edited_account.__dict__)
+            if account_serializer.is_valid():
+                account_serializer.save()
+                return edited_account
+            else:
+                print(account_serializer.errors)
+            return None
         except Exception as e:
-            return None """
+            return None
     def get_by_user(self, user_id: str) -> Account:
         try:
             account: Account = self.model.objects.get(user_id=user_id)

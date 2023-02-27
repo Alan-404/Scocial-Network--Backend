@@ -9,7 +9,8 @@ Content-Type: application/json
     "email": "nguyentri.alan@gmail.com",
     "b_date": "2001-04-04",
     "gender": "male",
-    "password": "123456"
+    "password": "123456",
+    "role": "ADMIN"
 }
 
 ###
@@ -24,18 +25,27 @@ Content-Type: application/json
 ###
 GET http://localhost:8000/user/info
 Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6Ik9UWVdFVU83V05HMTdFMVFLT0hJOSJ9.jYrR7nDCuv9Ic1ZO8qSsRhBruJ_ZtGBNehDF9uNPH9Y
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IkxNRDFEWkNUNzJTR0MyNEhLWlNDUyJ9.zKnEsuurbMdRdp_ZPApg--Traj4GcNKFqeKW3Qbtzag
 
 
 ###
 PUT http://localhost:8000/user/
 Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6Ik9UWVdFVU83V05HMTdFMVFLT0hJOSJ9.jYrR7nDCuv9Ic1ZO8qSsRhBruJ_ZtGBNehDF9uNPH9Y
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IlhENEY4NzNEVzRHNVA1VU9KUVJZTSJ9.rLyBkx2gNzDCc6r00pkk9wdbZ5mbxnjeabF4fciZQIM
 
 {
-    "first_name": "tri",
+    "first_name": "tridz",
     "last_name": "nguyen",
     "phone": "0938671192",
     "b_date": "2001-04-04",
     "gender": "male"
+}
+
+###
+POST http://localhost:8000/post/api
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IkxNRDFEWkNUNzJTR0MyNEhLWlNDUyJ9.zKnEsuurbMdRdp_ZPApg--Traj4GcNKFqeKW3Qbtzag
+
+{
+    "content": "test api"
 }

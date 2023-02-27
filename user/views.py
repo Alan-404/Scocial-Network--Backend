@@ -1,7 +1,7 @@
 from django.http import JsonResponse
 from rest_framework.decorators import api_view
 from rest_framework.request import Request
-from utils.constants import StatusCode
+from utils.enums import StatusCode, RequestMethod
 from utils.middle_ware import JwtFilter
 from utils.lib import from_dict, map, get_data
 from utils.dtos import APIResponse
@@ -23,15 +23,19 @@ account_service = AccountService()
 def handle(request: Request) -> JsonResponse:
     obj: str = 'user'
     # Post method
-    if request.method == "POST":
+    if request.method == RequestMethod.POST_METHOD.value:
         user: User = from_dict(Model=User, dictionary=request.data)
         account: Account = from_dict(Model=Account, dictionary=request.data)
+
+        if user_service.get_by_email(user.email):
+            return JsonResponse(APIResponse(message='Email has been taken').to_json(), status=StatusCode.BAD_REQUEST)
 
         saved_user: User = user_service.add(user)
         if saved_user is None:
             return JsonResponse(APIResponse(message='Cannot add User', object=obj).to_json(), status=StatusCode.ERROR_SERVER)
         
         account.user_id = saved_user.id
+
         saved_account: Account = account_service.add(account)
 
         if saved_account is None:
@@ -39,13 +43,13 @@ def handle(request: Request) -> JsonResponse:
         user_serializer = UserSerializer(saved_user)
         return JsonResponse(APIResponse(success=True, message='Registered User', object=obj, data=user_serializer.data).to_json(), status=StatusCode.OK)
     # PUT method
-    elif request.method == "PUT":
+    elif request.method == RequestMethod.PUT_METHOD.value:
         account_id: str = filter.get_account_id(request.headers.get('Authorization'))
 
         if account_id is None:
             return JsonResponse(APIResponse(success=False, message='Invalid Token', object=obj, data=None).to_json(), status=StatusCode.BAD_REQUEST)
         account: Account = account_service.get_by_id(account_id)
-        print(account.__dict__)
+
         if account is None:
             return JsonResponse(APIResponse(success=False, message='Not found Account', object=obj, data=None).to_json(), status=StatusCode.NOT_FOUND)
         
@@ -53,7 +57,8 @@ def handle(request: Request) -> JsonResponse:
         if user is None:
             return JsonResponse(APIResponse(success=False, message='Not found User', object=obj, data=None).to_json(), status=StatusCode.BAD_REQUEST)
         
-        edit_data: User = map(from_obj=user, to_obj=User())
+        edit_data = map(from_obj=user, Model=User)
+        
         edit_data = get_data(obj=edit_data, dictionary=request.data)
 
         edited_user: User = user_service.edit(user, edit_data)
@@ -65,7 +70,7 @@ def handle(request: Request) -> JsonResponse:
 
 @api_view(['GET'])
 def auth(request: Request) -> JsonResponse:
-    if request.method == 'GET':
+    if request.method == RequestMethod.GET_METHOD.value:
         obj: str = 'user'
         account_id = filter.get_account_id(request.headers.get('Authorization'))
 

@@ -32,9 +32,10 @@ def model_to_dict(object: ModelBase) -> dict:
                 data[item] = object.__dict__[item]
     return data
 
-def map(from_obj: object, to_obj: object) -> object:
-    for item in to_obj.__dict__.keys():
+def map(from_obj: object, Model: ModelBase) -> ModelBase:
+    obj = Model()
+    for item in obj.__dict__.keys():
         if item in from_obj.__dict__.keys():
-            to_obj.__dict__[item] = from_obj.__dict__[item]
+            obj.__dict__[item] = from_obj.__dict__[item]
 
-    return to_obj
+    return obj

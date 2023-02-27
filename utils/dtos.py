@@ -8,7 +8,6 @@ class Response:
     def to_dict(self) -> dict:
         dictionary = dict()
         for param in self.__dict__.keys():
-            print(param)
             dictionary[param] = self.__dict__[param]
         return dictionary
 
